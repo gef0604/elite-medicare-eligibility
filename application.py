@@ -29,7 +29,8 @@ def credential():
     username = request.form['username']
     password = request.form['password']
     api = request.form['apiKey']
-    res = med_api_connector(1,1,1).change_credential(username, password, api)
+    accesskey = request.form['accesskey']
+    res = med_api_connector(1,1,1).change_credential(username, password, api, accesskey)
     return res
 
 

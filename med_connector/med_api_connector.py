@@ -1,9 +1,7 @@
 import json
 
 from utils.xml_parser import xml_parser
-from properties import sample
 import requests
-import boto3
 
 class med_api_connector:
     def __init__(self, username, password, access_key):
@@ -21,27 +19,16 @@ class med_api_connector:
         # print(raw_xml_response)
         return xml_parser().xml_to_json(raw_xml_response)
 
-    def change_credential(self, username, password, api_key):
+    def change_credential(self, username, password, api_key, accesskey):
         body = {'username': username,
                 'password': password,
-                'api': api_key}
+                'api': api_key,
+                'accesskey' : accesskey}
 
         print(body)
-        # session = boto3.session.Session()
-        # client = session.client(
-        #     service_name='secretsmanager',
-        #     region_name='us-east-1'
-        # )
-        #
-        # response = client.put_secret_value(
-        #     SecretId='medicare-eligibility-credentials',
-        #     # ClientRequestToken='string',
-        #     # Description='string',
-        #     # KmsKeyId='string',
-        #     # SecretBinary=b'bytes',
-        #     SecretString=json.dumps(body))
-
-        # print(response)
+        
+        r = requests.post(url='https://fxo48mt8q6.execute-api.us-east-1.amazonaws.com/med-credential',
+                          data=json.dumps(body))
 
         # update aws
-        return 'Succeeded'
+        return r.content.decode('utf-8')
