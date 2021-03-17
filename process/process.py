@@ -1,3 +1,4 @@
+import json
 from copy import deepcopy
 
 from utils.field_mappers import basic_info_parser, inpatient_parser, deductible_caps_parser, QMB_Status_parser, \
@@ -29,8 +30,7 @@ class processor:
             if 'Error' in raw_response['Result']['Section'].keys():
                 print(raw_response['Result']['Section']['Error'])
                 print(raw_response['Result']['Section']['Note'])
-                return str(raw_response['Result']['Section']['Note']) + ' ' + str(
-                    raw_response['Result']['Section']['Error'])
+                return json.dumps(raw_response['Result']['Section']['Error']) + json.dumps(raw_response['Result']['Section']['Note'])
 
         """
         seperate sections in different obj,
@@ -70,7 +70,7 @@ class processor:
         merge_res = self.merge(sf_model_array)
 
         print(merge_res)
-        return self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid'])
+        return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
         # self.sf_connector.create_or_update_objects_by_dict(merge_res, acctid=data_points['acctid'])
 
     """
