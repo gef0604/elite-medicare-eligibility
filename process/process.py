@@ -30,7 +30,11 @@ class processor:
             if 'Error' in raw_response['Result']['Section'].keys():
                 print(raw_response['Result']['Section']['Error'])
                 print(raw_response['Result']['Section']['Note'])
-                return json.dumps(raw_response['Result']['Section']['Error']) + json.dumps(raw_response['Result']['Section']['Note'])
+                res = {}
+                res['success'] = False
+                res['Error'] = raw_response['Result']['Section']['Error']
+                res['Note'] = raw_response['Result']['Section']['Note']
+                return json.dump(res)
 
         """
         seperate sections in different obj,
