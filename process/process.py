@@ -34,7 +34,7 @@ class processor:
                 res['success'] = False
                 res['Error'] = raw_response['Result']['Section']['Error']
                 res['Note'] = raw_response['Result']['Section']['Note']
-                return json.dump(res)
+                return json.dumps(res)
 
         """
         seperate sections in different obj,
