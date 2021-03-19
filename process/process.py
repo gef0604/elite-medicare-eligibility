@@ -185,9 +185,9 @@ class processor:
 #   "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
 #   "acctid" : '0013m00002BWr8bAAD'
 # }
-#
-# med_api_connector(1,1,1).execute(d)
 # #
-# # # print(med_api_connector(1,1,1).execute(d))
+# # med_api_connector(1,1,1).execute(d)
+# # #
+# # # # print(med_api_connector(1,1,1).execute(d))
 # print(processor().process(d))
 # a= 1

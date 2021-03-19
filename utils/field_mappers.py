@@ -79,7 +79,7 @@ class basic_info_parser(parser):
             if flat_json['Result_Section_Eligibility_Eligibility03_@value'] == 'Part A':
                 if 'Result_Section_Date_Date03_@value' in flat_json.keys():
                     if len(flat_json['Result_Section_Date_Date03_@value']) < 17:
-                        res['PartAEligibilityStart__c'] = flat_json['Result_Section_Date_Date03_@value']
+                        res['PartAEligibilityStart__c'] = self.format_date(flat_json['Result_Section_Date_Date03_@value'])
                         res['PartAEnd__c'] = "Ongoing"
                     else:
                         dates = flat_json['Result_Section_Date_Date03_@value'].split('-')
