@@ -74,7 +74,7 @@ class processor:
         merge_res = self.merge(sf_model_array)
 
         print(merge_res)
-        # return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
+        return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
         # self.sf_connector.create_or_update_objects_by_dict(merge_res, acctid=data_points['acctid'])
 
     """
@@ -183,14 +183,14 @@ class processor:
         return res
 
 # d = {
-#   "hic": "8RD2GD7ND13",
-#   "firstname": "Lloyd",
-#   "lastname": "Anderson",
-#   "dob": "19551205",
+#   "hic": "9XJ5X38FN85",
+#   "firstname": "Robin",
+#   "lastname": "Pratt",
+#   "dob": "19540718",
 #   "npi": "9120929238",
 #   "service": "270_271_ElgTransactions",
 #   "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
-#   "acctid" : '0013m00002BWr8bAAD'
+#   "acctid" : '0013m00002BXolkAAD'
 # }
 # #
 # # med_api_connector(1,1,1).execute(d)
