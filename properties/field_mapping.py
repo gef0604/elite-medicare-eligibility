@@ -119,18 +119,18 @@ def get_msp_static_field_mapping():
             "Section": {
                 "Address": {
                     "Address01": {
-                        "@value": "Address1"
+                        "@value": "MspAddress1__c"
                     }
                 },
                 "Address2": {
                     "Address201": {
-                        "@value": "City"
+                        "@value": "MspCity__c"
                     },
                     "Address202": {
-                        "@value": "State"
+                        "@value": "MspState__c"
                     },
                     "Address203": {
-                        "@value": "Zip"
+                        "@value": "MspZip__c"
                     }
                 }
             }
@@ -145,6 +145,17 @@ def get_msp_conditional_field_mapping():
                 "Date": {
                     "Date03": {
                         "@value": "20120101-20181031"
+                    }
+                },
+                "Eligibility": {
+                    "Eligibility01": {
+                        "@value": "Other or Additional Payor"
+                    },
+                    "Eligibility03": {
+                        "@value": "Plan Waiting Period"
+                    },
+                    "Eligibility04": {
+                        "@value": "MSPType__c"
                     }
                 }
             }
@@ -305,3 +316,128 @@ def get_error_mapping():
             }
         }
     }
+
+def get_snf_conditional_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "Eligibility": {
+                    "Eligibility04": {
+                        "@value": "Medicare Part A"
+                    },
+                    "Eligibility01": {
+                        "@value": "Benefit Description"
+                    }
+                },
+                "Date": {
+                    "Date03": {
+                        "@value": "20120101-20181031"
+                    }
+                },
+            }
+        }
+    }
+
+def get_snf_static_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "Eligibility": {
+                    "Eligibility03": {
+                        "@value": "Snf_VisitType__c"
+                    }
+                },
+                "MoreDetails": {
+                    "Name": {
+                        "Name09": {
+                            "@value": "Snf_BillingNPI__c"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+def get_home_health_conditional_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "Eligibility": {
+                    "Eligibility03": {
+                        "@value": "Contains 'Home Health Care'"
+                    },
+
+                },
+                "Date": {
+                    "Date03": {
+                        "@value": "20120101-20181031"
+                    }
+                }
+            }
+        }
+    }
+
+def get_home_health_static_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "MoreDetails": {
+                    "Name": {
+                        "Name09": {
+                            "@value": "HH_NPI__c"
+                        }
+                    }
+                },
+                "Note":{
+                    "Note01": {
+                        "@value": "HH_PatientStatus__c"
+                    }
+                }
+            }
+        }
+    }
+
+def get_hospice_conditional_field_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "Eligibility": {
+                    "Eligibility03": {
+                        "@value": "Contains 'Hospice'"
+                    },
+
+                },
+                "Date": {
+                    "Date03": {
+                        "@value": "20120101-20181031"
+                    }
+                },
+                "Note": {
+                    "Note01": {
+                        "@value": "revoc code"
+                    }
+                }
+            }
+        }
+    }
+
+def get_hospice_static_field_mapping():
+    return {
+        "Result": {
+            "Section": {
+                "MoreDetails": {
+                    "Name": {
+                        "Name09": {
+                            "@value": "HospiceNPI__c"
+                        }
+                    }
+                },
+                "Service": {
+                    "Service02": {
+                        "@value": "DaysUsed__c"
+                    }
+                }
+            }
+        }
+    }
+

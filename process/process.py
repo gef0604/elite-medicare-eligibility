@@ -2,7 +2,7 @@ import json
 from copy import deepcopy
 
 from utils.field_mappers import basic_info_parser, inpatient_parser, deductible_caps_parser, QMB_Status_parser, \
-    msp_parser, plan_coverage_parser, part_d_parser
+    msp_parser, plan_coverage_parser, part_d_parser, hospice_parser, home_health_parser, snf_parser
 from med_connector.med_api_connector import med_api_connector
 from sf_connector.sf_api_connector import sf_api_connector
 
@@ -74,7 +74,7 @@ class processor:
         merge_res = self.merge(sf_model_array)
 
         print(merge_res)
-        return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
+        # return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
         # self.sf_connector.create_or_update_objects_by_dict(merge_res, acctid=data_points['acctid'])
 
     """
@@ -151,14 +151,12 @@ class processor:
         qmb = QMB_Status_parser().parse(raw_response)
         # look at msp later
         # 'MSP__c' : msp_parser().parse(raw_response),
+        msp = msp_parser().parse(raw_response)
         plan_coverage = plan_coverage_parser().parse(raw_response)
         part_d = part_d_parser().parse(raw_response)
-        # print(basic)
-        # print(inpatient)
-        # print(deductible)
-        # print(qmb)
-        # print(plan_coverage)
-        # print(part_d)
+        homehealth = home_health_parser().parse(raw_response)
+        hospice = hospice_parser().parse(raw_response)
+        snf = snf_parser().parse(raw_response)
         if basic != None:
             res = {**res, **basic}
         if inpatient != None:
@@ -171,8 +169,17 @@ class processor:
             res = {**res, **plan_coverage}
         if part_d != None:
             res = {**res, **part_d}
+        if msp != None:
+            res = {**res, **msp}
+        if homehealth != None:
+            res = {**res, **homehealth}
+        if hospice != None:
+            res = {**res, **hospice}
+        if snf != None:
+            res = {**res, **snf}
         # if MSP__c != None:
         #     res = {**res, **MSP__c}
+
         return res
 
 # d = {
