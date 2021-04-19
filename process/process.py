@@ -13,11 +13,11 @@ class processor:
     def __init__(self):
         # sf = Salesforce(password='Toronto360', username='eip@accelerize360.com.uat', organizationId='00D6s0000008aQV',
         #                     security_token='Xkeuinwc9Rb3xVk67Fb7xTojE',domain='test')
-        self.sf_connector = sf_api_connector(username='eip@accelerize360.com.uat',
+        self.sf_connector = sf_api_connector(username='eip@accelerize360.com',
                                              password='Toronto360',
-                                             organizationId='00D6s0000008aQV',
-                                             security_token='Xkeuinwc9Rb3xVk67Fb7xTojE',
-                                             domain='test')
+                                             organizationId='00D1N000001C94L',
+                                             security_token='5XncVr4jQpm87A08izzlgTbmU'
+                                             )
         self.med_api_connector = med_api_connector(1, 2, 1)
 
     def process(self, data_points):
