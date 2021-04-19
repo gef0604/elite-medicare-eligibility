@@ -345,13 +345,17 @@ class part_d_parser(parser):
 
         res = {}
 
+        # condition for part d
+        if flat_json['Result_Section_Eligibility_Eligibility04_@value'] != 'Other' or \
+                 flat_json['Result_Section_Eligibility_Eligibility03_@value'] != 'Pharmacy':
+            return None
+
         # get info 3 key, in case the data structure is different
-        # plan_name_key = ''
         for key in flat_json.keys():
             if 'Info03' in key:
-                if flat_json['Result_Section_Eligibility_Eligibility04_@value'] == 'Medicare Part D':
-                    res['PartDName__c'] = 'Medicare Part D'
-                    res['PlanId__c'] = flat_json[key]
+                # if flat_json['Result_Section_Eligibility_Eligibility04_@value'] == 'Medicare Part D':
+                res['PartDName__c'] = 'Other'
+                res['PlanId__c'] = flat_json[key]
 
         if 'Result_Section_Date_Date03_@value' in flat_json.keys():
 
@@ -372,7 +376,7 @@ class part_d_parser(parser):
         tmp = super(part_d_parser, self).parse(json_content)
 
         # if no plan type means it's invalid
-        if 'PartDName__c' not in tmp.keys():
+        if tmp == None or 'PartDName__c' not in tmp.keys():
             return None
         else:
             return tmp
@@ -409,8 +413,8 @@ class snf_parser(parser):
         res['Snf_EndDate__c'] = end_date
 
         # DOEBA DOLBA
-        res['Snf_DOEBA__c'] = start_date
-        res['Snf_DOLBA__c'] = end_date if end_date != 'Ongoing' else start_date
+        res['SnfDoeba__c'] = start_date
+        res['SnfDolba__c'] = end_date if end_date != 'Ongoing' else start_date
 
         return res
 
@@ -442,13 +446,16 @@ class home_health_parser(parser):
         end_date = self.format_date(end_date)
         start_date = self.format_date(start_date)
 
-
-        res['HH_StartDate__c'] = start_date
-        res['HH_EndDate__c'] = end_date
+        if self.check_value_equals('Result_Section_Date_Date03_@value', 'Service', flat_json):
+            res['StartDate__c'] = start_date
+            res['EndDate__c'] = end_date
 
         # DOEBA DOLBA
-        res['HH_DOEBA__c'] = start_date
-        res['HH_DOLBA__c'] = end_date if end_date != 'Ongoing' else start_date
+        if self.check_value_equals('Result_Section_Date_Date03_@value', 'Period Start', flat_json):
+            res['HomeHealthDoeba__c'] = flat_json['Result_Section_Date_Date03_@value']
+
+        if self.check_value_equals('Result_Section_Date_Date03_@value', 'Period End', flat_json):
+            res['HomeHealthDoeba__c'] = flat_json['Result_Section_Date_Date03_@value']
 
 
         return res
@@ -484,11 +491,11 @@ class hospice_parser(parser):
             start_date = self.format_date(start_date)
 
 
-            res['HospiceStart_Date__c'] = start_date
-            res['HospiceTerm_Date_c'] = end_date
+            res['HospiceStartDate__c'] = start_date
+            res['HospiceTermDate_c'] = end_date
 
         if 'Result_Section_Note_Note01_@value' in flat_json.keys():
-            res['RevocCode__c'] = int(flat_json['Result_Section_Note_Note01_@value'])
+            res['RevocCode__c'] = int(flat_json['Result_Section_Note_Note01_@value'][-1])
 
             hos_coverage = {1: 'Not revoked, open spell',
                             2: 'Revoked by notice of revocation',
@@ -505,4 +512,6 @@ class error_parser(parser):
         self.field_mapping = field_mapping.get_error_mapping()
 
 # s = hospice_parser().parse(sample_json.hospice_sample_json)
+# print(s)
+# s = part_d_parser().parse(sample_json.part_sample_json)
 # print(s)

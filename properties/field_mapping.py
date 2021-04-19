@@ -276,7 +276,10 @@ def get_part_d_conditional_field_mapping():
             "Section": {
                 "Eligibility": {
                     "Eligibility04": {
-                        "@value": "Medicare Part D"
+                        "@value": "Other"
+                    },
+                    "Eligibility03": {
+                        "@value": "Pharmacy"
                     }
                 },
                 "Date": {
@@ -350,7 +353,7 @@ def get_snf_static_mapping():
                 "MoreDetails": {
                     "Name": {
                         "Name09": {
-                            "@value": "Snf_BillingNPI__c"
+                            "@value": "BillingNpi__c"
                         }
                     }
                 }
@@ -384,13 +387,13 @@ def get_home_health_static_mapping():
                 "MoreDetails": {
                     "Name": {
                         "Name09": {
-                            "@value": "HH_NPI__c"
+                            "@value": "NPI__c"
                         }
                     }
                 },
                 "Note":{
                     "Note01": {
-                        "@value": "HH_PatientStatus__c"
+                        "@value": "PatientStatus__c"
                     }
                 }
             }
@@ -428,7 +431,7 @@ def get_hospice_static_field_mapping():
                 "MoreDetails": {
                     "Name": {
                         "Name09": {
-                            "@value": "HospiceNPI__c"
+                            "@value": "NPI__c"
                         }
                     }
                 },
