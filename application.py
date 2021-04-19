@@ -36,6 +36,8 @@ def medicare():
             contents=body
         )
 
+        return 'Internal Error'
+
 @application.route('/credential',methods=['GET', 'POST'])
 def credential():
     username = request.form['username']

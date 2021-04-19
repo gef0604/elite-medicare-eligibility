@@ -16,8 +16,8 @@ class processor:
         self.sf_connector = sf_api_connector(username='eip@accelerize360.com',
                                              password='Toronto360',
                                              organizationId='00D1N000001C94L',
-                                             security_token='5XncVr4jQpm87A08izzlgTbmU'
-                                             )
+                                             security_token='5XncVr4jQpm87A08izzlgTbmU',
+                                             domain=None)
         self.med_api_connector = med_api_connector(1, 2, 1)
 
     def process(self, data_points):
@@ -90,6 +90,7 @@ class processor:
                 subject='Failed to create medicare eligibility object' + ' ' + time.strftime("%Y-%m-%d-%H%M%S", time.localtime()),
                 contents=body
             )
+            return 'Internal Error'
         # self.sf_connector.create_or_update_objects_by_dict(merge_res, acctid=data_points['acctid'])
 
     """
@@ -198,14 +199,14 @@ class processor:
         return res
 
 # d = {
-#   "hic": "1ER8H40AV28",
-#   "firstname": "Betty",
-#   "lastname": "WInslett",
+#   "hic": "1ER8H40AV",
+#   "firstname": "123",
+#   "lastname": "123",
 #   "dob": "19370407",
 #   "npi": "9120929238",
 #   "service": "270_271_ElgTransactions",
 #   "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
-#   "acctid" : '0013m00002BWZ51AAH'
+#   "acctid" : '0013m00002JKeh2AAD'
 # }
 # #
 # # med_api_connector(1,1,1).execute(d)
