@@ -1,10 +1,12 @@
 import json
+import time
 from copy import deepcopy
 
 from utils.field_mappers import basic_info_parser, inpatient_parser, deductible_caps_parser, QMB_Status_parser, \
     msp_parser, plan_coverage_parser, part_d_parser, hospice_parser, home_health_parser, snf_parser
 from med_connector.med_api_connector import med_api_connector
 from sf_connector.sf_api_connector import sf_api_connector
+import yagmail
 
 
 class processor:
@@ -74,7 +76,20 @@ class processor:
         merge_res = self.merge(sf_model_array)
 
         print(merge_res)
-        return json.dumps(self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid']))
+        sf_med_response = self.sf_connector.create_medicare_object(merge_res, acctid=data_points['acctid'])
+        # print(sf_med_response["success"])
+
+        if sf_med_response["success"] == True:
+            return json.dumps(sf_med_response)
+        else:
+            body = json.dumps(sf_med_response)
+
+            yag = yagmail.SMTP("yang.wuxuan@accelerize360.com", password="@Ywx19950604")
+            yag.send(
+                to=["elite@accelerize360.com"],
+                subject='Failed to create medicare eligibility object' + ' ' + time.strftime("%Y-%m-%d-%H%M%S", time.localtime()),
+                contents=body
+            )
         # self.sf_connector.create_or_update_objects_by_dict(merge_res, acctid=data_points['acctid'])
 
     """
