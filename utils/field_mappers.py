@@ -346,8 +346,8 @@ class part_d_parser(parser):
         res = {}
 
         # condition for part d
-        if flat_json['Result_Section_Eligibility_Eligibility04_@value'] != 'Other' or \
-                 flat_json['Result_Section_Eligibility_Eligibility03_@value'] != 'Pharmacy':
+        if not self.check_value_equals('Result_Section_Eligibility_Eligibility04_@value', 'Other', flat_json) or \
+            self.check_value_equals('Result_Section_Eligibility_Eligibility03_@value', 'Pharmacy', flat_json):
             return None
 
         # get info 3 key, in case the data structure is different
