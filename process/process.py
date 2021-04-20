@@ -30,6 +30,14 @@ class processor:
         # if error, send back
         # print('error')
 
+        # deal with the error without section
+        if 'Error' in raw_response['Result']:
+            res = {}
+            res['success'] = False
+            res['Error'] = raw_response['Result']['Error']
+            return json.dumps(res)
+
+        # deal with error inside section
         if isinstance(raw_response['Result']['Section'], dict):
             if 'Error' in raw_response['Result']['Section'].keys():
                 print(raw_response['Result']['Section']['Error'])
@@ -201,7 +209,7 @@ class processor:
         return res
 
 # d = {
-#   "hic": "",
+#   "hic": "7MP9NJ2GC51",
 #   "firstname": "123",
 #   "lastname": "123",
 #   "dob": "19370407",
