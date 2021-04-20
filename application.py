@@ -5,6 +5,7 @@ from flask import Flask, request, render_template
 from process.process import processor
 from med_connector.med_api_connector import med_api_connector
 import yagmail
+import traceback
 application = Flask(__name__)
 
 
@@ -26,8 +27,8 @@ def medicare():
         data_points['acctid'] = request_paras['acctid']
 
         return processor().process(data_points)
-    except:
-        body = 'AWS interval error, please check logs'
+    except Exception as e:
+        body = str(traceback.format_exc())
 
         yag = yagmail.SMTP("yang.wuxuan@accelerize360.com", password="@Ywx19950604")
         yag.send(
