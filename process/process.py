@@ -23,6 +23,8 @@ class processor:
     def process(self, data_points):
         # get xml and parse into json
         raw_response = self.med_api_connector.execute(data_points)
+        if isinstance(raw_response, str):
+            return raw_response
         print(raw_response)
 
         # if error, send back
@@ -198,19 +200,19 @@ class processor:
 
         return res
 
-# d = {
-#   "hic": "1ER8H40AV",
-#   "firstname": "123",
-#   "lastname": "123",
-#   "dob": "19370407",
-#   "npi": "9120929238",
-#   "service": "270_271_ElgTransactions",
-#   "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
-#   "acctid" : '0013m00002JKeh2AAD'
-# }
+d = {
+  "hic": "",
+  "firstname": "123",
+  "lastname": "123",
+  "dob": "19370407",
+  "npi": "9120929238",
+  "service": "270_271_ElgTransactions",
+  "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
+  "acctid" : '0013m00002JKeh2AAD'
+}
 # #
 # # med_api_connector(1,1,1).execute(d)
 # # #
 # # # # print(med_api_connector(1,1,1).execute(d))
-# print(processor().process(d))
+print(processor().process(d))
 # a= 1
