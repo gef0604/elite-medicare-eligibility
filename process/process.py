@@ -209,14 +209,14 @@ class processor:
         return res
 
 # d = {
-#   "hic": "7MP9NJ2GC51",
-#   "firstname": "123",
-#   "lastname": "123",
-#   "dob": "19370407",
+#   "hic": "8GQ9XJ4QC42",
+#   "firstname": "KATHY",
+#   "lastname": "HAAS",
+#   "dob": "19570730",
 #   "npi": "9120929238",
 #   "service": "270_271_ElgTransactions",
 #   "api_key": "d01aefa6-45e6-403e-b0dc-9d4907e8eba8",
-#   "acctid" : '0013m00002JKeh2AAD'
+#   "acctid" : '0013m00002GOMedAAH'
 # }
 # #
 # # med_api_connector(1,1,1).execute(d)

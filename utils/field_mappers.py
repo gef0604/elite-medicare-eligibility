@@ -102,7 +102,7 @@ class basic_info_parser(parser):
                     if len(flat_json['Result_Section_Date_Date03_@value']) < 17:
                         res['PartAEligibilityStart__c'] = self.format_date(
                             flat_json['Result_Section_Date_Date03_@value'])
-                        res['PartAEnd__c'] = "Ongoing"
+                        # res['PartAEnd__c'] = "Ongoing"
                     else:
                         dates = flat_json['Result_Section_Date_Date03_@value'].split('-')
                         res['PartAEligibilityStart__c'] = self.format_date(dates[0])
@@ -112,7 +112,7 @@ class basic_info_parser(parser):
                     if len(flat_json['Result_Section_Date_Date03_@value']) < 17:
                         res['PartBEligibilityStart__c'] = self.format_date(
                             flat_json['Result_Section_Date_Date03_@value'])
-                        res['PartBEnd__c'] = "Ongoing"
+                        # res['PartBEnd__c'] = "Ongoing"
                     else:
                         dates = flat_json['Result_Section_Date_Date03_@value'].split('-')
                         res['PartBEligibilityStart__c'] = self.format_date(dates[0])
@@ -170,7 +170,8 @@ class inpatient_parser(parser):
                 try:
                     res['InpatientEndDate__c'] = self.format_date(date_str[9:17])
                 except:
-                    res['InpatientEndDate__c'] = 'Ongoing'
+                    # res['InpatientEndDate__c'] = 'Ongoing'
+                    pass
 
         # print('inpa')
         # print(flat_json)
@@ -237,8 +238,8 @@ class QMB_Status_parser(parser):
             try:
                 res['QmbEndDate__c'] = self.format_date(date_str[9:17])
             except:
-                res['QmbEndDate__c'] = 'Ongoing'
-
+                # res['QmbEndDate__c'] = 'Ongoing'
+                pass
         return res
 
 
@@ -278,13 +279,19 @@ class msp_parser(parser):
             return {"MSPType__c": flat_json['Result_Section_Eligibility_Eligibility04_@value']}
 
         start_date = flat_json['Result_Section_Date_Date03_@value'][0:8]
+
         end_date = flat_json['Result_Section_Date_Date03_@value'][9:] if len(
             flat_json['Result_Section_Date_Date03_@value']) == 17 else 'Ongoing'
         end_date = self.format_date(end_date)
         start_date = self.format_date(start_date)
-        return {'MspStartDate__c': start_date,
-                'MspEndDate__c': end_date,
+        res = {'MspStartDate__c': start_date,
+                # 'MspEndDate__c': end_date,
                 "MSPType__c": flat_json['Result_Section_Eligibility_Eligibility04_@value']}
+
+        if end_date != 'Ongoing':
+            res['MspEndDate__c'] = end_date
+
+        return res
 
 
 class plan_coverage_parser(parser):
@@ -320,7 +327,7 @@ class plan_coverage_parser(parser):
                     flat_json['Result_Section_Date_Date03_@value'].split('-')[1])
             else:
                 res['PlanCoverageStartDate__c'] = self.format_date(flat_json['Result_Section_Date_Date03_@value'][0:8])
-                res['PlanCoverageEndDate__c'] = 'Ongoing'
+                # res['PlanCoverageEndDate__c'] = 'Ongoing'
 
         return res
 
@@ -347,9 +354,11 @@ class part_d_parser(parser):
 
         # condition for part d
         if not self.check_value_equals('Result_Section_Eligibility_Eligibility04_@value', 'Other', flat_json) or \
-            self.check_value_equals('Result_Section_Eligibility_Eligibility03_@value', 'Pharmacy', flat_json):
+            not self.check_value_equals('Result_Section_Eligibility_Eligibility03_@value', 'Pharmacy', flat_json):
             return None
 
+        # print("exist")
+        # print(flat_json)
         # get info 3 key, in case the data structure is different
         for key in flat_json.keys():
             if 'Info03' in key:
@@ -366,7 +375,7 @@ class part_d_parser(parser):
                 res['PartDEndDate__c'] = self.format_date(date_str.split('-')[1])
             else:
                 res['PartDStartDate__c'] = self.format_date(date_str[0:8])
-                res['PartDEndDate__c'] = 'Ongoing'
+                # res['PartDEndDate__c'] = 'Ongoing'
         # print(flat_json)
         # print(flat_mapping)
 
@@ -410,7 +419,8 @@ class snf_parser(parser):
 
 
         res['Snf_StartDate__c'] = start_date
-        res['Snf_EndDate__c'] = end_date
+        if end_date != 'Ongoing':
+            res['Snf_EndDate__c'] = end_date
 
         # DOEBA DOLBA
         res['SnfDoeba__c'] = start_date
@@ -448,7 +458,8 @@ class home_health_parser(parser):
 
         if self.check_value_equals('Result_Section_Date_Date03_@value', 'Service', flat_json):
             res['StartDate__c'] = start_date
-            res['EndDate__c'] = end_date
+            if end_date != 'Ongoing':
+                res['EndDate__c'] = end_date
 
         # DOEBA DOLBA
         if self.check_value_equals('Result_Section_Date_Date03_@value', 'Period Start', flat_json):
@@ -492,7 +503,8 @@ class hospice_parser(parser):
 
 
             res['HospiceStartDate__c'] = start_date
-            res['HospiceTermDate_c'] = end_date
+            if end_date != 'Ongoing':
+                res['HospiceTermDate_c'] = end_date
 
         if 'Result_Section_Note_Note01_@value' in flat_json.keys():
             res['RevocCode__c'] = int(flat_json['Result_Section_Note_Note01_@value'][-1])

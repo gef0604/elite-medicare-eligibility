@@ -102,3 +102,9 @@ class sf_api_connector:
             elif object_name == 'PartD__c':
                 return self.connector.MSP__c.update(id, body)
 
+sf = sf_api_connector(username='eip@accelerize360.com',
+                                             password='Toronto360',
+                                             organizationId='00D1N000001C94L',
+                                             security_token='5XncVr4jQpm87A08izzlgTbmU',
+                                             domain=None)
+
