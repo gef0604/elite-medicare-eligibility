@@ -10,6 +10,8 @@ class parser(object):
         self.field_mapping = {}
         self.condition_map = {}
 
+    # check if the requirement met, if not returns None
+    # do some dymamic logic
     def parse_condition(self, map):
         return {}
 
@@ -25,6 +27,7 @@ class parser(object):
         # print(flat_field_mapping)
         # print(flat_json_content)
         res = {}
+
 
         for key in flat_field_mapping:
             if key in flat_json_content:
@@ -527,3 +530,9 @@ class error_parser(parser):
 # print(s)
 # s = part_d_parser().parse(sample_json.part_sample_json)
 # print(s)
+
+s = hospice_parser().flatten_json(sample_json.hospice_sample_json)
+p = hospice_parser()
+f = p.flatten_json(p.field_mapping)
+print(s)
+print(f)

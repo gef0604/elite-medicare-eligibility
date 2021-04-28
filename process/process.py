@@ -23,6 +23,8 @@ class processor:
     def process(self, data_points):
         # get xml and parse into json
         raw_response = self.med_api_connector.execute(data_points)
+
+        # error, return the error string to sf
         if isinstance(raw_response, str):
             return raw_response
         print(raw_response)
@@ -54,7 +56,7 @@ class processor:
         raw:
         {
         ...
-        'section' : []
+        'section' : [] # it can't be array, has to be {}
         ...
         },
         processed: [{
@@ -76,6 +78,7 @@ class processor:
         # dataset = self.field_mapping(raw_response)
 
         sf_model_array = []
+        # res_array:[{section1}, {section2}]
         for res in res_array:
             sf_model_array.append(self.field_mapping(res))
             # print(self.field_mapping(res))
@@ -171,8 +174,8 @@ class processor:
         # return res
 
         res = {}
-        basic = basic_info_parser().parse(raw_response)
-        inpatient = inpatient_parser().parse(raw_response)
+        basic = basic_info_parser().parse(raw_response) # {name, dob...}
+        inpatient = inpatient_parser().parse(raw_response) # partadec...
         deductible = deductible_caps_parser().parse(raw_response)
         qmb = QMB_Status_parser().parse(raw_response)
         # look at msp later

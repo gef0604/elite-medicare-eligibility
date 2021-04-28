@@ -45,6 +45,7 @@ class sf_api_connector:
                 child_id = self.get_id_if_exist(key, data[key])
                 print(self.create_or_update_object(key, data[key], child_id))
 
+    # [{'success':True, 'id':xxx}]
     def get_id_from_response(self, response):
         return response[0]['id']
     def query(self, sql):
